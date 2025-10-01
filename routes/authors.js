@@ -4,7 +4,7 @@ const Author = require('../models/author');
 
 /**
  * @swagger
- * /authors:
+ * /author:
  *   get:
  *     summary: Get all authors
  *     tags: [Authors]
@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 
 /**
  * @swagger
- * /authors:
+ * /author:
  *   post:
  *     summary: Create a new author
  *     tags: [Authors]
@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
 
 /**
  * @swagger
- * /authors/{id}:
+ * /author/{id}:
  *   put:
  *     summary: Update an author by ID
  *     tags: [Authors]
@@ -101,7 +101,7 @@ router.put('/:id', async (req, res) => {
 
 /**
  * @swagger
- * /authors/{id}:
+ * /author/{id}:
  *   delete:
  *     summary: Delete an author by ID
  *     tags: [Authors]
