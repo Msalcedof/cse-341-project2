@@ -4,46 +4,53 @@ const bookController = require('../controllers/bookController');
 
 /**
  * @swagger
+ * tags:
+ *   name: Books
+ *   description: API for managing books
+ */
+
+/**
+ * @swagger
  * /book:
  *   get:
  *     summary: Retrieve all books
+ *     tags: [Books]
  *     responses:
  *       200:
  *         description: A list of books
- *
+ *       500:
+ *         description: Server error
+ */
+router.get('/', bookController.getAllBooks);
+
+/**
+ * @swagger
+ * /book:
  *   post:
  *     summary: Create a new book
+ *     tags: [Books]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               title:
- *                 type: string
- *               author:
- *                 type: string
- *               genre:
- *                 type: string
- *               publishedYear:
- *                 type: integer
- *               pages:
- *                 type: integer
- *               rating:
- *                 type: number
- *               summary:
- *                 type: string
+ *             $ref: '#/components/schemas/Book'
  *     responses:
  *       201:
  *         description: Book created
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Server error
  */
+router.post('/', bookController.createBook);
 
 /**
  * @swagger
  * /book/{id}:
  *   put:
  *     summary: Update a book by ID
+ *     tags: [Books]
  *     parameters:
  *       - in: path
  *         name: id
@@ -56,22 +63,7 @@ const bookController = require('../controllers/bookController');
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               title:
- *                 type: string
- *               author:
- *                 type: string
- *               genre:
- *                 type: string
- *               publishedYear:
- *                 type: integer
- *               pages:
- *                 type: integer
- *               rating:
- *                 type: number
- *               summary:
- *                 type: string
+ *             $ref: '#/components/schemas/Book'
  *     responses:
  *       200:
  *         description: Book updated
@@ -79,9 +71,17 @@ const bookController = require('../controllers/bookController');
  *         description: Invalid input
  *       404:
  *         description: Book not found
- *
+ *       500:
+ *         description: Server error
+ */
+router.put('/:id', bookController.updateBook);
+
+/**
+ * @swagger
+ * /book/{id}:
  *   delete:
  *     summary: Delete a book by ID
+ *     tags: [Books]
  *     parameters:
  *       - in: path
  *         name: id
@@ -94,11 +94,9 @@ const bookController = require('../controllers/bookController');
  *         description: Book deleted
  *       404:
  *         description: Book not found
+ *       500:
+ *         description: Server error
  */
-
-router.get('/', bookController.getAllBooks);
-router.post('/', bookController.createBook);
-router.put('/:id', bookController.updateBook);
 router.delete('/:id', bookController.deleteBook);
 
 module.exports = router;
