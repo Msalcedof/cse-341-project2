@@ -4,10 +4,14 @@ const mongoose = require('mongoose');
 const app = express();
 const bookRoutes = require('./routes/books');
 const { swaggerUi, specs } = require('./swagger');
+const authorsRoutes = require('./routes/authors');
+
+
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use(express.json());
 app.use('/book', bookRoutes);
+app.use('/authors', authorsRoutes);
 
 app.get('/', (req, res) => {
   res.send('Welcome to the Book API! Visit /book or /api-docs to get started.');
