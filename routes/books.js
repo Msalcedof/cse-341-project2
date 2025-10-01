@@ -11,7 +11,7 @@ const bookController = require('../controllers/bookController');
 
 /**
  * @swagger
- * /book:
+ * /books:
  *   get:
  *     summary: Retrieve all books
  *     tags: [Books]
@@ -25,7 +25,7 @@ router.get('/', bookController.getAllBooks);
 
 /**
  * @swagger
- * /book:
+ * /books:
  *   post:
  *     summary: Create a new book
  *     tags: [Books]
@@ -47,7 +47,7 @@ router.post('/', bookController.createBook);
 
 /**
  * @swagger
- * /book/{id}:
+ * /books/{id}:
  *   put:
  *     summary: Update a book by ID
  *     tags: [Books]
@@ -78,7 +78,7 @@ router.put('/:id', bookController.updateBook);
 
 /**
  * @swagger
- * /book/{id}:
+ * /books/{id}:
  *   delete:
  *     summary: Delete a book by ID
  *     tags: [Books]
