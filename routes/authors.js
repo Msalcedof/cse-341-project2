@@ -1,6 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Author = require('../models/author');
+const { ensureAuth } = require('../middleware/authMiddleware');
+
+/**
+ * @swagger
+ * tags:
+ *   name: Authors
+ *   description: API for managing authors
+ */
 
 /**
  * @swagger
@@ -27,7 +35,9 @@ router.get('/', async (req, res) => {
  * @swagger
  * /authors:
  *   post:
- *     summary: Create a new author
+ *     summary: Create a new author (requires login)
+ *     security:
+ *       - OAuth2: []
  *     tags: [Authors]
  *     requestBody:
  *       required: true
@@ -40,10 +50,12 @@ router.get('/', async (req, res) => {
  *         description: Author created
  *       400:
  *         description: Validation error
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Server error
  */
-router.post('/', async (req, res) => {
+router.post('/', ensureAuth, async (req, res) => {
   try {
     const { name, birthYear, nationality } = req.body;
     if (!name || !birthYear) {
@@ -61,7 +73,9 @@ router.post('/', async (req, res) => {
  * @swagger
  * /authors/{id}:
  *   put:
- *     summary: Update an author by ID
+ *     summary: Update an author by ID (requires login)
+ *     security:
+ *       - OAuth2: []
  *     tags: [Authors]
  *     parameters:
  *       - in: path
@@ -80,12 +94,14 @@ router.post('/', async (req, res) => {
  *         description: Author updated
  *       400:
  *         description: Validation error
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Author not found
  *       500:
  *         description: Server error
  */
-router.put('/:id', async (req, res) => {
+router.put('/:id', ensureAuth, async (req, res) => {
   try {
     const { name, birthYear, nationality } = req.body;
     if (!name || !birthYear) {
@@ -103,7 +119,9 @@ router.put('/:id', async (req, res) => {
  * @swagger
  * /authors/{id}:
  *   delete:
- *     summary: Delete an author by ID
+ *     summary: Delete an author by ID (requires login)
+ *     security:
+ *       - OAuth2: []
  *     tags: [Authors]
  *     parameters:
  *       - in: path
@@ -114,12 +132,14 @@ router.put('/:id', async (req, res) => {
  *     responses:
  *       200:
  *         description: Author deleted
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Author not found
  *       500:
  *         description: Server error
  */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', ensureAuth, async (req, res) => {
   try {
     const deleted = await Author.findByIdAndDelete(req.params.id);
     if (!deleted) return res.status(404).json({ error: 'Author not found' });

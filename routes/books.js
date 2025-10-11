@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bookController = require('../controllers/bookController');
+const { ensureAuth } = require('../middleware/authMiddleware');
 
 /**
  * @swagger
@@ -27,7 +28,9 @@ router.get('/', bookController.getAllBooks);
  * @swagger
  * /books:
  *   post:
- *     summary: Create a new book
+ *     summary: Create a new book (requires login)
+ *     security:
+ *       - OAuth2: []
  *     tags: [Books]
  *     requestBody:
  *       required: true
@@ -40,16 +43,20 @@ router.get('/', bookController.getAllBooks);
  *         description: Book created
  *       400:
  *         description: Validation error
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Server error
  */
-router.post('/', bookController.createBook);
+router.post('/', ensureAuth, bookController.createBook);
 
 /**
  * @swagger
  * /books/{id}:
  *   put:
- *     summary: Update a book by ID
+ *     summary: Update a book by ID (requires login)
+ *     security:
+ *       - OAuth2: []
  *     tags: [Books]
  *     parameters:
  *       - in: path
@@ -69,18 +76,22 @@ router.post('/', bookController.createBook);
  *         description: Book updated
  *       400:
  *         description: Invalid input
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Book not found
  *       500:
  *         description: Server error
  */
-router.put('/:id', bookController.updateBook);
+router.put('/:id', ensureAuth, bookController.updateBook);
 
 /**
  * @swagger
  * /books/{id}:
  *   delete:
- *     summary: Delete a book by ID
+ *     summary: Delete a book by ID (requires login)
+ *     security:
+ *       - OAuth2: []
  *     tags: [Books]
  *     parameters:
  *       - in: path
@@ -92,11 +103,13 @@ router.put('/:id', bookController.updateBook);
  *     responses:
  *       200:
  *         description: Book deleted
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: Book not found
  *       500:
  *         description: Server error
  */
-router.delete('/:id', bookController.deleteBook);
+router.delete('/:id', ensureAuth, bookController.deleteBook);
 
 module.exports = router;
