@@ -12,7 +12,7 @@ const { ensureAuth } = require('../middleware/authMiddleware');
 
 /**
  * @swagger
- * /books:
+ * /book:
  *   get:
  *     summary: Retrieve all books
  *     tags: [Books]
@@ -26,7 +26,7 @@ router.get('/', bookController.getAllBooks);
 
 /**
  * @swagger
- * /books:
+ * /book:
  *   post:
  *     summary: Create a new book (requires login)
  *     security:
@@ -52,7 +52,7 @@ router.post('/', ensureAuth, bookController.createBook);
 
 /**
  * @swagger
- * /books/{id}:
+ * /book/{id}:
  *   put:
  *     summary: Update a book by ID (requires login)
  *     security:
@@ -87,7 +87,7 @@ router.put('/:id', ensureAuth, bookController.updateBook);
 
 /**
  * @swagger
- * /books/{id}:
+ * /book/{id}:
  *   delete:
  *     summary: Delete a book by ID (requires login)
  *     security:
