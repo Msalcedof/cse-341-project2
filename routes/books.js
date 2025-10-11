@@ -3,6 +3,12 @@ const router = express.Router();
 const bookController = require('../controllers/bookController');
 const { ensureAuth } = require('../middleware/authMiddleware');
 
+/**
+ * @swagger
+ * tags:
+ *   name: Books
+ *   description: API for managing books
+ */
 
 /**
  * @swagger
