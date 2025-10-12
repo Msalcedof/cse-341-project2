@@ -34,9 +34,7 @@ app.get('/', (req, res) => {
 
 
 mongoose.connect(process.env.MONGODB_URI, {
-  dbName: 'cse-341-Project2',
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+  dbName: 'cse-341-Project2'
 })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error(err));
