@@ -25,7 +25,7 @@ app.use(passport.session());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use(express.json());
-app.use('/book', bookRoutes);
+app.use('/books', bookRoutes);
 app.use('/authors', authorsRoutes);
 
 app.get('/', (req, res) => {
