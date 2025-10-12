@@ -6,7 +6,7 @@ const { ensureAuth } = require('../middleware/authMiddleware');
 /**
  * @swagger
  * tags:
- *   name: Books
+ *   name: Book
  *   description: API for managing books
  */
 
