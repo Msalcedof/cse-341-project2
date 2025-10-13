@@ -14,8 +14,6 @@ const authRoutes = require('./routes/auth');
 
 const MongoStore = require('connect-mongo');
 
-app.use('/auth', authRoutes);
-
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -26,9 +24,11 @@ app.use(session({
     collectionName: 'sessions'
   })
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/auth', authRoutes);
+
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use(express.json());
