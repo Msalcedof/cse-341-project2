@@ -12,12 +12,19 @@ require('./middleware/passport');
 
 const authRoutes = require('./routes/auth');
 
+const MongoStore = require('connect-mongo');
+
 app.use('/auth', authRoutes);
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    dbName: 'cse-341-Project2',
+    collectionName: 'sessions'
+  })
 }));
 
 app.use(passport.initialize());
