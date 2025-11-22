@@ -37,7 +37,7 @@ router.get('/', async (req, res) => {
  *   post:
  *     summary: Create a new author (requires login)
  *     security:
- *       - OAuth2: []
+ *       - sessionCookie: []
  *     tags: [Authors]
  *     requestBody:
  *       required: true
@@ -75,7 +75,7 @@ router.post('/', ensureAuth, async (req, res) => {
  *   put:
  *     summary: Update an author by ID (requires login)
  *     security:
- *       - OAuth2: []
+ *       - sessionCookie: []
  *     tags: [Authors]
  *     parameters:
  *       - in: path
@@ -107,7 +107,11 @@ router.put('/:id', ensureAuth, async (req, res) => {
     if (!name || !birthYear) {
       return res.status(400).json({ error: 'Name and birth year are required' });
     }
-    const updated = await Author.findByIdAndUpdate(req.params.id, { name, birthYear, nationality }, { new: true });
+    const updated = await Author.findByIdAndUpdate(
+      req.params.id,
+      { name, birthYear, nationality },
+      { new: true }
+    );
     if (!updated) return res.status(404).json({ error: 'Author not found' });
     res.status(200).json(updated);
   } catch (err) {
@@ -121,7 +125,7 @@ router.put('/:id', ensureAuth, async (req, res) => {
  *   delete:
  *     summary: Delete an author by ID (requires login)
  *     security:
- *       - OAuth2: []
+ *       - sessionCookie: []
  *     tags: [Authors]
  *     parameters:
  *       - in: path

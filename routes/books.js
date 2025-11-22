@@ -30,7 +30,7 @@ router.get('/', bookController.getAllBooks);
  *   post:
  *     summary: Create a new book (requires login)
  *     security:
- *       - OAuth2: []
+ *       - sessionCookie: []
  *     tags: [Books]
  *     requestBody:
  *       required: true
@@ -56,7 +56,7 @@ router.post('/', ensureAuth, bookController.createBook);
  *   put:
  *     summary: Update a book by ID (requires login)
  *     security:
- *       - OAuth2: []
+ *       - sessionCookie: []
  *     tags: [Books]
  *     parameters:
  *       - in: path
@@ -91,7 +91,7 @@ router.put('/:id', ensureAuth, bookController.updateBook);
  *   delete:
  *     summary: Delete a book by ID (requires login)
  *     security:
- *       - OAuth2: []
+ *       - sessionCookie: []
  *     tags: [Books]
  *     parameters:
  *       - in: path

@@ -10,25 +10,16 @@ const options = {
       description: `
         This API allows users to manage books and authors with full CRUD operations.
         Authentication is handled via Google OAuth. Users must log in to access protected routes such as creating, updating, or deleting books and authors.
-        After logging in, a session is established and protected routes become accessible.
+        After logging in, a session cookie is established and protected routes become accessible.
       `,
     },
     components: {
       securitySchemes: {
-        OAuth2: {
-          type: 'oauth2',
-          flows: {
-            authorizationCode: {
-              authorizationUrl: 'https://accounts.google.com/o/oauth2/auth',
-              tokenUrl: 'https://oauth2.googleapis.com/token',
-              scopes: {
-                'read:books': 'Read book data',
-                'write:books': 'Modify book data',
-                'read:authors': 'Read author data',
-                'write:authors': 'Modify author data'
-              }
-            }
-          }
+        sessionCookie: {
+          type: 'apiKey',
+          in: 'cookie',
+          name: 'connect.sid',
+          description: 'Session cookie set after logging in via /auth/google'
         }
       },
       schemas: {
@@ -76,7 +67,7 @@ const options = {
     },
     security: [
       {
-        OAuth2: []
+        sessionCookie: []
       }
     ]
   },
