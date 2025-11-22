@@ -1,21 +1,19 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
-
-const bookRoutes = require('./routes/books');
-const { swaggerUi, specs } = require('./swagger');
-const authorsRoutes = require('./routes/authors');
-const authRoutes = require('./routes/auth');
-
 const session = require('express-session');
 const passport = require('passport');
-require('./middleware/passport');
 const MongoStore = require('connect-mongo');
 
-app.set('trust proxy', 1); // Required for secure cookies on Render
+const app = express();
+require('./middleware/passport');
 
-// Parse JSON before routes
+const bookRoutes = require('./routes/books');
+const authorsRoutes = require('./routes/authors');
+const authRoutes = require('./routes/auth');
+const { swaggerUi, specs } = require('./swagger');
+
+app.set('trust proxy', 1); // Required for secure cookies on Render
 app.use(express.json());
 
 app.use(session({
@@ -46,6 +44,12 @@ app.use('/authors', authorsRoutes);
 
 app.get('/', (req, res) => {
   res.send('Welcome to the Book API! Visit /books or /api-docs to get started.');
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  res.status(500).send('Internal Server Error');
 });
 
 // MongoDB connection

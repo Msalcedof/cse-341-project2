@@ -6,13 +6,17 @@ passport.use(new GoogleStrategy({
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: 'https://project2-3gge.onrender.com/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) => {
-  // Only store minimal user info in session
-  const user = {
-    id: profile.id,
-    email: profile.emails?.[0]?.value,
-    name: profile.displayName
-  };
-  return done(null, user);
+  try {
+    const user = {
+      id: profile.id,
+      email: profile.emails?.[0]?.value || 'no-email',
+      name: profile.displayName
+    };
+    return done(null, user);
+  } catch (err) {
+    console.error('Error in Google Strategy:', err);
+    return done(err, null);
+  }
 }));
 
 passport.serializeUser((user, done) => done(null, user));
