@@ -2,7 +2,12 @@ const router = require('express').Router();
 const passport = require('passport');
 
 // Start Google OAuth login
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// Added "prompt: 'select_account'" so Google always asks which account to use
+router.get('/google', passport.authenticate('google', { 
+  scope: ['profile', 'email'],
+  prompt: 'select_account'   // forces account chooser every time
+}));
+
 
 // Handle callback after Google login
 router.get('/google/callback',
